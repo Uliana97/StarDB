@@ -11,12 +11,20 @@ import ReactDOM from "react-dom";
 
 const getResource = async (url) => {
   const res = await fetch(url);
-  const body = await res.json();
-  return body;
+  if (!res.ok) {
+    throw new Error(`Could not fetch ${url}, recoved ${res.status}`);
+  }
+  return await res.json();
 };
 
-getResource("https://swapi.dev/api/people/").then((body) => {
-  console.log(body.results);
-});
+getResource("https://swapi.dev/api/people/")
+  .then((body) => {
+    return body.results;
+  })
+  .then((people) => {
+    people.forEach((el) => {
+      console.log(el.height);
+    });
+  });
 
 ReactDOM.render(<div>Hi there!</div>, document.getElementById("root"));
