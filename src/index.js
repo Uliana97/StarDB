@@ -1,17 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+// fetch("https://swapi.dev/api/people/")
+//   .then((response) => {
+//     return response.json();
+//   })
+//   .then((body) => {
+//     console.log(body);
+//   });
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+const getResource = async (url) => {
+  const res = await fetch(url);
+  const body = await res.json();
+  return body;
+};
+
+getResource("https://swapi.dev/api/people/").then((body) => {
+  console.log(body.results);
+});
+
+ReactDOM.render(<div>Hi there!</div>, document.getElementById("root"));
