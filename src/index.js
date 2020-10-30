@@ -1,30 +1,58 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-// fetch("https://swapi.dev/api/people/")
-//   .then((response) => {
-//     return response.json();
-//   })
-//   .then((body) => {
-//     console.log(body);
-//   });
+class SwapiService {
+  __apiBase = "https://swapi.dev/api/";
 
-const getResource = async (url) => {
-  const res = await fetch(url);
-  if (!res.ok) {
-    throw new Error(`Could not fetch ${url}, recoved ${res.status}`);
+  async getResource(url) {
+    const res = await fetch(`${this.__apiBase}${url}`);
+    //if res.status NOT from 200 to 290
+    if (!res.ok) {
+      throw new Error(`Could not fetch ${url}, recived ${res.status}`);
+    }
+    return await res.json();
   }
-  return await res.json();
-};
 
-getResource("https://swapi.dev/api/people/")
-  .then((body) => {
-    return body.results;
-  })
-  .then((people) => {
-    people.forEach((el) => {
-      console.log(el.height);
-    });
-  });
+  async getAllPeople() {
+    const res = await this.getResource(`people/`);
+    return res.results;
+  }
+
+  getPerson(id) {
+    return this.getResource(`people/${id}`);
+  }
+
+  async getAllPlanets() {
+    const res = await this.getResource(`planets/`);
+    return res.results;
+  }
+
+  getPlanet(id) {
+    return this.getResource(`planets/${id}`);
+  }
+
+  async getAllStarships() {
+    const res = await this.getResource(`starships/`);
+    return res.results;
+  }
+
+  getStarship(id) {
+    return this.getResource(`starships/${id}`);
+  }
+}
+
+const a = new SwapiService();
+
+//I dont want to write it that long! Easier is to make async f and return res.results
+
+// a.getAllPeople().then((people) =>
+//   people.results.forEach((el) => {
+//     console.log(el.height);
+//   })
+// );
+
+a.getAllPeople().then((people) => people.forEach((el) => console.log(el.name)));
+
+a.getPerson(5).then((p) => console.log(p.name));
 
 ReactDOM.render(<div>Hi there!</div>, document.getElementById("root"));
