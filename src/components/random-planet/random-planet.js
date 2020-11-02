@@ -16,16 +16,9 @@ export default class RandomPlanet extends Component {
     error: false,
   };
 
-  constructor() {
-    super();
+  componentDidMount() {
     this.changePlanet(12);
   }
-
-  catchError = () => {
-    this.setState({
-      error: true,
-    });
-  };
 
   changePlanet(id) {
     this.swapiService
@@ -36,7 +29,11 @@ export default class RandomPlanet extends Component {
           loading: false,
         });
       })
-      .catch(this.catchError);
+      .catch(() => {
+        this.setState({
+          error: true,
+        });
+      });
   }
 
   render() {
