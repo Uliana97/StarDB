@@ -47,7 +47,7 @@ export default class SwapiService {
     return item.url.match(regExp)[1];
   }
 
-  __transformPlanet(planet) {
+  __transformPlanet = (planet) => {
     return {
       id: this.makeId(planet),
       name: planet.name,
@@ -55,9 +55,9 @@ export default class SwapiService {
       rotationPeriod: planet.rotation_period,
       diameter: planet.diameter,
     };
-  }
+  };
 
-  __transformStarship(starship) {
+  __transformStarship = (starship) => {
     return {
       id: this.makeId(starship),
       name: starship.name,
@@ -69,9 +69,9 @@ export default class SwapiService {
       passengers: starship.passengers,
       cargoCapacity: starship.cargo_capacity,
     };
-  }
+  };
 
-  __transformPerson(person) {
+  __transformPerson = (person) => {
     return {
       id: this.makeId(person),
       name: person.name,
@@ -79,5 +79,5 @@ export default class SwapiService {
       birthYear: person.birth_year,
       eyeColor: person.eye_color,
     };
-  }
+  };
 }
