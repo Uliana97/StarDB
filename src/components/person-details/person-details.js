@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import SwapiService from "../../services/swapi-service";
+import { ErrorIndicator } from "../error-indicator";
 import { Spinner } from "../spinner";
 
 import "./person-details.css";
@@ -11,6 +12,7 @@ export default class PersonDetails extends Component {
   state = {
     personData: null,
     loading: true,
+    error: false,
   };
 
   componentDidMount() {
@@ -37,12 +39,17 @@ export default class PersonDetails extends Component {
       return;
     }
 
-    this.swapiService.getPerson(itemId).then((personData) => {
-      this.setState({
-        personData,
-        loading: false,
+    this.swapiService
+      .getPerson(itemId)
+      .then((personData) => {
+        this.setState({
+          personData,
+          loading: false,
+        });
+      })
+      .catch(() => {
+        this.setState({ error: true });
       });
-    });
   };
 
   render() {
@@ -52,6 +59,10 @@ export default class PersonDetails extends Component {
 
     if (this.state.loading) {
       return <Spinner />;
+    }
+
+    if (this.state.error) {
+      return <ErrorIndicator />;
     }
 
     const { id, name, gender, birthYear, eyeColor } = this.state.personData;
