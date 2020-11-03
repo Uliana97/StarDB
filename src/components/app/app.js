@@ -18,7 +18,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container pb-5">
         <Header />
         <RandomPlanet />
 
