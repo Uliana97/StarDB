@@ -44,6 +44,14 @@ export default class App extends Component {
             <ItemList
               onItemSelected={this.onItemSelected}
               getData={this.swapiService.getAllPlanets}
+              //Render функция
+              //мы принимаем каждый объект массива и отображаем то, что нам нужно (строки) и даже новые элементы
+              renderInfo={(i) => (
+                <>
+                  <span>{`${i.name} (${i.diameter})`}</span>
+                  <button>!!!</button>
+                </>
+              )}
             />
           </div>
           <div className="col-md-6">
