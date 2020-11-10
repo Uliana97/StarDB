@@ -39,8 +39,9 @@ export default class PeoplePage extends Component {
         //Здесь важно не потерять значение this у метода getAllPeople -> использовать ф стрелку!
         getData={this.swapiService.getAllPeople}
         //мы принимаем каждый объект массива и отображаем то, что нам нужно
-        renderInfo={(i) => `${i.name} (${i.gender})`}
-      />
+      >
+        {(i) => `${i.name} (${i.gender})`}
+      </ItemList>
     );
 
     const personDetails = <PersonDetails itemId={this.state.selectedItem} />;
