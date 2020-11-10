@@ -12,9 +12,10 @@ export default class ItemList extends Component {
   };
 
   componentDidMount() {
-    const { getData } = this.props;
+    // const { getData } = this.props;
 
-    getData()
+    this.props
+      .getData()
       .then((items) => {
         this.setState({ items });
       })

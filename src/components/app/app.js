@@ -5,9 +5,7 @@ import Header from "../header";
 import RandomPlanet from "../random-planet";
 import ErrorButton from "../error-button";
 import { ErrorIndicator } from "../error-indicator";
-import PeoplePage from "../peoplePage";
-import ItemList from "../item-list";
-import PersonDetails from "../person-details";
+import PeoplePage from "../people-page";
 
 import "./app.css";
 
@@ -38,27 +36,6 @@ export default class App extends Component {
         <ErrorButton />
 
         <PeoplePage />
-
-        <div className="row mb2">
-          <div className="col-md-6">
-            <ItemList
-              onItemSelected={this.onItemSelected}
-              getData={this.swapiService.getAllPlanets}
-              //Render функция
-              //мы принимаем каждый объект массива и отображаем то, что нам нужно (строки) и даже новые элементы
-              renderInfo={(i) => (
-                <>
-                  <span>{`${i.name} (${i.diameter})`}</span>
-                  <button>!!!</button>
-                </>
-              )}
-            />
-          </div>
-          <div className="col-md-6">
-            <PersonDetails itemId={this.state.selectedItem} />
-            <ErrorButton />
-          </div>
-        </div>
       </div>
     );
   }
