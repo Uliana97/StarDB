@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import SwapiService from "../../services/swapi-service";
 import ErrorBounary from "../error-boundary";
 import ItemList from "../item-list";
-import PersonDetails from "../person-details";
+import ItemDetails from "../item-details";
 import { Row } from "../row";
 
 import "./people-page.css";
@@ -34,16 +34,15 @@ export default class PeoplePage extends Component {
       </ErrorBounary>
     );
 
-    const personDetails = (
+    const itemDetails = (
       <ErrorBounary>
-        <PersonDetails itemId={this.state.selectedItem} />
+        <ItemDetails itemId={this.state.selectedItem} />
       </ErrorBounary>
     );
 
     return (
       <>
-        <Row left={itemList} right={personDetails} />
-        <Row left={itemList} right={personDetails} />
+        <Row left={itemList} right={itemDetails} />
       </>
     );
   }
