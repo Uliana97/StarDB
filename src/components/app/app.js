@@ -41,6 +41,10 @@ export default class App extends Component {
                 itemId={4}
                 getData={getPerson}
                 getImg={getPersonImg}
+                labels={[
+                  { field: "eyeColor", label: "Eye Color" },
+                  { field: "gender", label: "Gender" },
+                ]}
               />
             }
             right={
@@ -48,6 +52,10 @@ export default class App extends Component {
                 itemId={6}
                 getData={getPlanet}
                 getImg={getPlanetImg}
+                labels={[
+                  { field: "population", label: "Population" },
+                  { field: "diameter", label: "Diameter" },
+                ]}
               />
             }
           />

@@ -26,14 +26,6 @@ export default class SwapiService {
     return `${this.__imgUrlBase}/characters/${id}.jpg`;
   };
 
-  getPlanetImg = ({ id }) => {
-    return `${this.__imgUrlBase}/planets/${id}.jpg`;
-  };
-
-  getStarshipImg = ({ id }) => {
-    return `${this.__imgUrlBase}/starships/${id}.jpg`;
-  };
-
   getAllPlanets = async () => {
     const res = await this.getResource(`planets/`);
     return res.results.map(this.__transformPlanet);
@@ -44,6 +36,11 @@ export default class SwapiService {
     return this.__transformPlanet(planet);
   };
 
+  //деструктурируем itemData
+  getPlanetImg = ({ id }) => {
+    return `${this.__imgUrlBase}/planets/${id}.jpg`;
+  };
+
   getAllStarships = async () => {
     const res = await this.getResource(`starships/`);
     return res.results.map(this.__transformStarship);
@@ -52,6 +49,11 @@ export default class SwapiService {
   getStarship = async (id) => {
     const starship = await this.getResource(`starships/${id}`);
     return this.__transformStarship(starship);
+  };
+
+  //деструктурируем itemData
+  getStarshipImg = ({ id }) => {
+    return `${this.__imgUrlBase}/starships/${id}.jpg`;
   };
 
   makeId(item) {
