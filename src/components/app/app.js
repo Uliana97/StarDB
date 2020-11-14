@@ -4,10 +4,11 @@ import SwapiService from "../../services/swapi-service";
 import Header from "../header";
 import ErrorBounary from "../error-boundary";
 import { ErrorIndicator } from "../error-indicator";
-
-import "./app.css";
 import { Row } from "../row";
 import ItemDetails from "../item-details";
+import { Labels } from "../item-details/item-details";
+
+import "./app.css";
 
 export default class App extends Component {
   swapiService = new SwapiService();
@@ -37,26 +38,16 @@ export default class App extends Component {
         <ErrorBounary>
           <Row
             left={
-              <ItemDetails
-                itemId={4}
-                getData={getPerson}
-                getImg={getPersonImg}
-                labels={[
-                  { field: "eyeColor", label: "Eye Color" },
-                  { field: "gender", label: "Gender" },
-                ]}
-              />
+              <ItemDetails itemId={4} getData={getPerson} getImg={getPersonImg}>
+                <Labels field="gender" label="Gender" />
+                <Labels field="birthYear" label="Birth Year" />
+              </ItemDetails>
             }
             right={
-              <ItemDetails
-                itemId={6}
-                getData={getPlanet}
-                getImg={getPlanetImg}
-                labels={[
-                  { field: "population", label: "Population" },
-                  { field: "diameter", label: "Diameter" },
-                ]}
-              />
+              <ItemDetails itemId={6} getData={getPlanet} getImg={getPlanetImg}>
+                <Labels field="population" label="Population" />
+                <Labels field="diameter" label="Diameter" />
+              </ItemDetails>
             }
           />
         </ErrorBounary>

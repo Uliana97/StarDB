@@ -5,6 +5,14 @@ import { Spinner } from "../spinner";
 
 import "./item-details.css";
 
+export const Labels = ({ itemData, field, label }) => {
+  return (
+    <li className="list-group-item">
+      <span className="term">{label}</span>
+      <span>{itemData[field]}</span>
+    </li>
+  );
+};
 export default class ItemDetails extends Component {
   state = {
     itemData: null,
@@ -59,21 +67,19 @@ export default class ItemDetails extends Component {
       return <ErrorIndicator />;
     }
 
+    //itemData: birthYear: "41.9BBY", eyeColor: "yellow", gender: "male", id: "4", name: "Darth Vader"
+    const { itemData } = this.state;
     const { name } = this.state.itemData;
 
     return (
       <div className="item-details card">
         <img className="item-image" src={this.state.img} alt="img" />
-
         <div className="card-body">
           <h4>{name}</h4>
           <ul className="list-group list-group-flush">
-            {this.props.labels.map((i) => (
-              <li className="list-group-item">
-                <span className="term">{i.label}</span>
-                <span>{this.state.itemData[i.field]}</span>
-              </li>
-            ))}
+            {React.Children.map(this.props.children, (child) =>
+              React.cloneElement(child, { itemData })
+            )}
           </ul>
         </div>
       </div>
