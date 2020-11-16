@@ -5,8 +5,8 @@ import Header from "../header";
 import ErrorBounary from "../error-boundary";
 import { ErrorIndicator } from "../error-indicator";
 import { Row } from "../row";
-import ItemDetails from "../item-details";
-import { Labels } from "../item-details/item-details";
+import ItemDetails, { Labels } from "../item-details/item-details";
+import RandomPlanet from "../random-planet";
 
 import "./app.css";
 
@@ -36,6 +36,7 @@ export default class App extends Component {
       <div className="container pb-5">
         <Header />
         <ErrorBounary>
+          <RandomPlanet />
           <Row
             left={
               <ItemDetails itemId={4} getData={getPerson} getImg={getPersonImg}>
