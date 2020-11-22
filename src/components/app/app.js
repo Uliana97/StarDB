@@ -35,19 +35,16 @@ export default class App extends Component {
         <ErrorBounary>
           <RandomPlanet />
 
-          <PeopleList onItemSelected={this.onItemSelected}>
-            {(i) => `${i.name} (${i.gender})`}
-          </PeopleList>
+          <PeopleList onItemSelected={this.onItemSelected} />
+
           <PeopleDetails id={5} />
 
-          <StarshipList onItemSelected={this.onItemSelected}>
-            {(i) => `${i.name} (${i.model})`}
-          </StarshipList>
+          <StarshipList onItemSelected={this.onItemSelected} />
+
           <StarshipDetails id={5} />
 
-          <PlanetList onItemSelected={this.onItemSelected}>
-            {(i) => `${i.name} (${i.diameter})`}
-          </PlanetList>
+          <PlanetList onItemSelected={this.onItemSelected} />
+
           <PlanetDetails id={5} />
         </ErrorBounary>
       </div>
