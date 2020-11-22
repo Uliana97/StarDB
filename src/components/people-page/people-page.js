@@ -3,8 +3,9 @@ import React, { Component } from "react";
 import SwapiService from "../../services/swapi-service";
 import ErrorBounary from "../error-boundary";
 import ItemList from "../item-list";
-import ItemDetails from "../item-details";
+import ItemDetails, { Labels } from "../item-details/item-details";
 import { Row } from "../row";
+import { withData } from "../hoc-helpers/";
 
 import "./people-page.css";
 
@@ -20,23 +21,28 @@ export default class PeoplePage extends Component {
   };
 
   render() {
+    const { getPerson, getAllPeople, getPersonImg } = this.swapiService;
+
+    const List = withData(ItemList, getAllPeople);
+
     const itemList = (
       <ErrorBounary>
-        <ItemList
-          onItemSelected={this.onItemSelected}
-          //Мы делаем этот компонент универсальным для людей, кораблей и планет благодаря тому, что мы вынесли отдельно вызов к серверу, который в последствии позвратит промис. Теперь мы можем контролировать извне то, какие данные будет получать и отображать компонент изменяя getAll...
-          //Здесь важно не потерять значение this у метода getAllPeople -> использовать ф стрелку!
-          getData={this.swapiService.getAllPeople}
-          //мы принимаем каждый объект массива и отображаем то, что нам нужно
-        >
+        <List onItemSelected={this.onItemSelected}>
           {(i) => `${i.name} (${i.gender})`}
-        </ItemList>
+        </List>
       </ErrorBounary>
     );
 
     const itemDetails = (
       <ErrorBounary>
-        <ItemDetails itemId={this.state.selectedItem} />
+        <ItemDetails
+          itemId={this.state.selectedItem}
+          getData={getPerson}
+          getImg={getPersonImg}
+        >
+          <Labels field="gender" label="Gender" />
+          <Labels field="birthYear" label="Birth Year" />
+        </ItemDetails>
       </ErrorBounary>
     );
 

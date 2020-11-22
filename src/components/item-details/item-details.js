@@ -35,17 +35,16 @@ export default class ItemDetails extends Component {
 
   newPerson = () => {
     const { itemId, getData, getImg } = this.props;
+
     if (!itemId) {
       return;
     }
 
-    //Swapi outside
     getData(itemId)
       .then((itemData) => {
         this.setState({
           itemData,
           loading: false,
-          //отдельно работаем с картинками, там другой API
           img: getImg(itemData),
         });
       })
