@@ -1,3 +1,5 @@
+import React from "react";
+
 import SwapiService from "../../services/swapi-service";
 import ItemList from "../item-list/item-list";
 import { withData } from "../hoc-helpers/";
@@ -8,9 +10,9 @@ const withRenderChildren = (Wrapped, fn) => {
   return (props) => <Wrapped {...props}>{fn}</Wrapped>;
 };
 
-const peopleData = (i) => `${i.name} (${i.gender})`;
-const planetData = (i) => `${i.name} (${i.diameter} km)`;
-const starshipData = (i) => `${i.name} (${i.model})`;
+const peopleData = (i) => `${i.name}`;
+const planetData = (i) => `${i.name}`;
+const starshipData = (i) => `${i.name}`;
 
 export const PeopleList = withData(
   withRenderChildren(ItemList, peopleData),
