@@ -1,58 +1,35 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 
 import SwapiService from "../../services/swapi-service";
 import { Spinner } from "../spinner";
 import { PlanetInfo } from "./planet-info";
-import { ErrorIndicator } from "../error-indicator/error-indicator";
 
 import "./random-planet.css";
 
-export default class RandomPlanet extends Component {
-  swapiService = new SwapiService();
+const RandomPlanet = () => {
+  const [planet, setPlanet] = useState({});
+  const [loading, setLoading] = useState(true);
 
-  state = {
-    planet: {},
-    loading: true,
-    error: false,
-  };
+  useEffect(() => {
+    changePlanet();
+    const interval = setInterval(changePlanet, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
-  componentDidMount() {
-    this.changePlanet();
-    this.interval = setInterval(this.changePlanet, 5000);
-  }
+  const swapiService = new SwapiService();
 
-  //Before Unmounting component we must clear all proceses
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-
-  changePlanet = () => {
-    this.swapiService
+  const changePlanet = () => {
+    swapiService
       .getPlanet(Math.floor(Math.random() * 25) + 2)
       .then((planet) => {
-        this.setState({
-          planet,
-          loading: false,
-        });
-      })
-      .catch(() => {
-        this.setState({
-          error: true,
-        });
+        setPlanet(planet);
+        setLoading(false);
       });
   };
 
-  render() {
-    const { planet, loading, error } = this.state;
+  const content = loading ? <Spinner /> : <PlanetInfo planet={planet} />;
 
-    const content = error ? (
-      <ErrorIndicator />
-    ) : loading ? (
-      <Spinner />
-    ) : (
-      <PlanetInfo planet={planet} />
-    );
+  return <div className="random-planet jumbotron rounded">{content}</div>;
+};
 
-    return <div className="random-planet jumbotron rounded">{content}</div>;
-  }
-}
+export default RandomPlanet;

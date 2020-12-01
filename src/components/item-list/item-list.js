@@ -10,6 +10,7 @@ const ItemList = ({ data, onItemSelected, children }) => {
           key={item.id}
           className="list-group-item"
           onClick={() => onItemSelected(item.id)}
+          //children(i) => `${i.name}`
         >
           {children(item)}
         </li>
