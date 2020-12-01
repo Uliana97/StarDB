@@ -1,6 +1,5 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 
-import { ErrorIndicator } from "../error-indicator";
 import { Spinner } from "../spinner";
 
 import "./item-details.css";
@@ -13,75 +12,53 @@ export const Labels = ({ itemData, field, label }) => {
     </li>
   );
 };
-export default class ItemDetails extends Component {
-  state = {
-    itemData: null,
-    img: null,
-    loading: true,
-    error: false,
-  };
 
-  componentDidMount() {
-    this.newPerson();
-  }
+const ItemDetails = ({ itemId, getData, getImg, children }) => {
+  const [itemData, setItemData] = useState(null);
+  const [img, setImg] = useState(null);
+  const [loading, setLoading] = useState(null);
 
-  //принимает PrevProps и PrevState
-  componentDidUpdate(prevProps) {
-    if (this.props.itemId !== prevProps.itemId) {
-      this.setState({ loading: true });
-      this.newPerson();
-    }
-  }
+  useEffect(() => {
+    let cancelled = false;
 
-  newPerson = () => {
-    const { itemId, getData, getImg } = this.props;
+    !cancelled && newPerson();
 
+    return (cancelled = true);
+  }, [itemId, getData, getImg]);
+
+  const newPerson = () => {
     if (!itemId) {
       return;
     }
 
-    getData(itemId)
-      .then((itemData) => {
-        this.setState({
-          itemData,
-          loading: false,
-          img: getImg(itemData),
-        });
-      })
-      .catch(() => {
-        this.setState({ error: true });
-      });
+    getData(itemId).then((itemData) => {
+      setLoading(false);
+      setItemData(itemData);
+      setImg(getImg(itemData));
+    });
   };
 
-  render() {
-    if (!this.state.itemData) {
-      return <span>Choose a hero!</span>;
-    }
-
-    if (this.state.loading) {
-      return <Spinner />;
-    }
-
-    if (this.state.error) {
-      return <ErrorIndicator />;
-    }
-
-    //itemData: birthYear: "41.9BBY", eyeColor: "yellow", gender: "male", id: "4", name: "Darth Vader"
-    const { itemData } = this.state;
-    const { name } = this.state.itemData;
-
-    return (
-      <div className="item-details card">
-        <img className="item-image" src={this.state.img} alt="img" />
-        <div className="card-body">
-          <h4>{name}</h4>
-          <ul className="list-group list-group-flush">
-            {React.Children.map(this.props.children, (child) =>
-              React.cloneElement(child, { itemData })
-            )}
-          </ul>
-        </div>
-      </div>
-    );
+  if (!itemData) {
+    return <span>Choose a hero!</span>;
   }
-}
+
+  if (loading) {
+    return <Spinner />;
+  }
+
+  return (
+    <div className="item-details card">
+      <img className="item-image" src={img} alt="img" />
+      <div className="card-body">
+        <h4>{itemData.name}</h4>
+        <ul className="list-group list-group-flush">
+          {React.Children.map(children, (child) =>
+            React.cloneElement(child, { itemData })
+          )}
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+export default ItemDetails;
